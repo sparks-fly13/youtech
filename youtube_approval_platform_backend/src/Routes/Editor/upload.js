@@ -38,7 +38,7 @@ const upload = multer({
 
 editorUploadRouter.post('/upload', userAuth, upload.single('video'), async (req, res) => {
   if (!req.file) {
-    return res.status(400).send('No file was uploaded.');
+    return res.status(400).send('No file was uploaded by you.');
   }
 
   const associatedYoutuberId = await Youtuber.findOne({ name: req.body.associatedYoutuber }).select('_id');
