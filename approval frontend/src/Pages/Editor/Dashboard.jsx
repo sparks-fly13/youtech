@@ -47,9 +47,7 @@ function EditorDashboard() {
                 <VideoUploadModal isOpen={isUploadModalOpen} onClose={handleUploadModalClose} />
             </Box>
             {/* List of Videos */}
-            <Box display="flex" flexDirection="row">
                 <VideoList />
-            </Box>
         </Box>
     );
 }

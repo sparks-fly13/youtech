@@ -5,6 +5,7 @@ const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const Video = require('../../models/Video');
 const Youtuber = require('../../models/Youtuber');
+const Editor = require('../../models/Editor');
 
 const editorUploadRouter = express.Router();
 
@@ -23,7 +24,7 @@ const upload = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      cb(null, `${file.fieldname}-${Date.now()}.mp4`);
+      cb(null, `${file.originalname}`);
     }
   }),
   fileFilter: (req, file, cb) => {
@@ -45,6 +46,13 @@ editorUploadRouter.post('/upload', userAuth, upload.single('video'), async (req,
 
   if (!associatedYoutuberId) {
     return res.status(400).json({ msg: 'No youtuber with that name exists.' });
+  }
+
+  const editor = await Editor.findById(req.user.id);
+
+  if (!editor.associatedYoutubers.includes(associatedYoutuberId)) {
+    editor.associatedYoutubers.push(associatedYoutuberId);
+    await editor.save();
   }
 
   const video = new Video({

@@ -62,7 +62,7 @@ const VideoUploadModal = ({ isOpen, onClose }) => {
             </FormControl>
             <FormControl>
               <FormLabel>Video</FormLabel>
-              <Input type="file" name="video" accept=".mp4" onChange={handleChange} />
+              <Input type="file" name="video" accept=".mp4,.mkv" onChange={handleChange} />
             </FormControl>
             <FormControl>
               <FormLabel>Associated Youtuber</FormLabel>
