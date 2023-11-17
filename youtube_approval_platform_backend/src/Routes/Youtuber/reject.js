@@ -12,7 +12,6 @@ youtuberRejectRouter.post('/reject/:videoId', userAuth, async (req, res) => {
         }
 
         video.status = 'rejected';
-        video.approvedBy = req.user._id;
 
         await video.save();
 

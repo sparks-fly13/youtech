@@ -12,7 +12,7 @@ youtuberApproveRouter.post('/approve/:videoId', userAuth, async (req, res) => {
         }
 
         video.status = 'approved';
-        video.approvedBy = req.user._id;
+        video.approvedBy = req.user.id;
         video.dateApproved = Date.now();
 
         await video.save();

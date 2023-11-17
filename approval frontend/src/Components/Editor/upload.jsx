@@ -1,9 +1,10 @@
 // VideoUploadModal.js
 import { useState } from 'react';
-import { Input, Textarea, Button, FormControl, FormLabel, VStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from '@chakra-ui/react';
+import { Input, Textarea, Button, FormControl, FormLabel, VStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 const VideoUploadModal = ({ isOpen, onClose }) => {
+  const toast = useToast();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -35,11 +36,22 @@ const VideoUploadModal = ({ isOpen, onClose }) => {
       });
 
       console.log(response.data);
-      alert(response.data.msg); // Display success message or handle errors
+       // Display success message or handle errors
+      toast({
+        title: response.data.msg,
+        status: 'success',
+        duration: 3000,
+        isClosable: true
+      });
       onClose(); // Close the modal after successful upload
     } catch (error) {
       console.error('Error uploading video:', error);
-      alert(error.response.data.msg);
+      toast({
+        title: error.response.data.msg,
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      });
     }
     window.location.reload();
   };

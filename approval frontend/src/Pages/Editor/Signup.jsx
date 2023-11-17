@@ -50,7 +50,7 @@ function EditorSignup() {
         }
     }
     return (
-        <Flex mt={40} width="full" align="center" justifyContent="center">
+        <Flex mt={20} width="full" align="center" justifyContent="center">
             <Box width="xl" p={8} borderWidth={1} borderRadius={13} borderColor="aliceblue" boxShadow="lg">
                 <Box textAlign="center" fontSize="xl">
                     <h1><strong>Signup</strong> as Editor</h1>

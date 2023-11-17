@@ -6,7 +6,7 @@ const youtuberPendingVideosRouter = express.Router();
 
 youtuberPendingVideosRouter.get('/pending-videos', userAuth, async (req, res) => {
     try {
-        const videos = await Video.find({ status: 'pending' });
+        const videos = await Video.find({ associatedYoutuber: req.user.id, status: 'pending' });
         res.json(videos);
     } catch (error) {
         console.error(error);

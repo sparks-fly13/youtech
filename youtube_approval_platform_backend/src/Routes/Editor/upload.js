@@ -50,8 +50,8 @@ editorUploadRouter.post('/upload', userAuth, upload.single('video'), async (req,
 
   const editor = await Editor.findById(req.user.id);
 
-  if (!editor.associatedYoutubers.includes(associatedYoutuberId)) {
-    editor.associatedYoutubers.push(associatedYoutuberId);
+  if (!editor.associatedYoutubers.includes(associatedYoutuberId._id)) {
+    editor.associatedYoutubers.push(associatedYoutuberId._id);
     await editor.save();
   }
 
@@ -60,7 +60,7 @@ editorUploadRouter.post('/upload', userAuth, upload.single('video'), async (req,
     description: req.body.description,
     filePath:`https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.file.key}`, // Use file location from S3
     uploadedBy: req.user.id,
-    associatedYoutuber: associatedYoutuberId,
+    associatedYoutuber: associatedYoutuberId._id,
     dateUploaded: Date.now(),
     dateApproved: null
   });

@@ -38,7 +38,7 @@ function VideoList() {
       justifyContent="center"
       m="15px"
     >
-            <ReactPlayer style={{cursor: "pointer"}} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="35%" />
+            <ReactPlayer style={{cursor: "pointer"}} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="60%" />
         <Box position="absolute" right="0" top="0">
             {hoveredVideo === video._id && <DeleteVideo videoId={video._id} />}
         </Box>

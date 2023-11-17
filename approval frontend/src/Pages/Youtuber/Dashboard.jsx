@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { Button, Text, Flex } from "@chakra-ui/react";
+import { Button, Text, Flex, Box } from "@chakra-ui/react";
 import Feedback from "../../Components/feedback";
 import Navbar from "../../Components/Navbar";
+import PendingVideosList from "../../Components/Youtuber/PendingVideosList";
 
 function YoutuberDashboard() {
     const history = useHistory();
@@ -21,18 +22,22 @@ function YoutuberDashboard() {
     }
 }
     return(
-            <div>
-                <Navbar />
-                {!!user ? 
-                    <Flex direction="column" align="center" justify="center">
-                        <Text>Welcome youtuber {user.name}!</Text>
-                        <Text>Your email is {user.email}</Text>
-                        <Button onClick={handleLogOut}>Log Out</Button>
-                        <Feedback />
-                    </Flex>
-                : null
-                }
-            </div>
+            <Box>
+                <Box>
+                    <Navbar />
+                    {!!user ? 
+                        <Flex direction="column" align="center" justify="center">
+                            <Text>Welcome youtuber {user.name}!</Text>
+                            <Text>Your email is {user.email}</Text>
+                            <Button onClick={handleLogOut}>Log Out</Button>
+                            <Feedback />
+                        </Flex>
+                    : null
+                    }
+                </Box>
+                {/* List of Pending Videos */}
+                <PendingVideosList />
+            </Box>
     );
 }
 
