@@ -13,7 +13,7 @@ google.options({ auth: oauth2Client });
 
 async function uploadVideo(jwtToken, filePath, title, description) {
     try {
-        const youtuber = await Youtuber.findOne({ jwtToken });
+        const youtuber = await Youtuber.findById({ jwtToken });
         if (!youtuber) {
             throw new Error('Youtuber not found');
         }

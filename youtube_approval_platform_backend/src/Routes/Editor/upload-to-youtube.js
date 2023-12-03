@@ -1,15 +1,18 @@
 const express = require('express');
 const userAuth = require('../../Middlewares/user-auth');
 const Video = require('../../models/Video');
+const Youtuber = require('../../models/Youtuber');
 const {uploadVideo} = require('../../services/youtubeService');
 const {sendEmail} = require('../../services/notificationService');
 
-const youtuberUploadRouter = express.Router();
+const editorUploadToYoutubeRouter = express.Router();
 
-youtuberUploadRouter.post('/upload/:videoId', userAuth, async (req, res) => {
+editorUploadToYoutubeRouter.post('/upload/:videoId', userAuth, async (req, res) => {
     try {
         const video = await Video.findById(req.params.videoId);
-        const youtuberEmail = req.user.email;
+        const associatedYoutuber = await Youtuber.findById(video.associatedYoutuber);
+        const youtuberEmail = associatedYoutuber.email;
+        const youtuberId = associatedYoutuber._id;
         if (!video) {
             return res.status(404).json({ msg: 'Video not found' });
         }
@@ -18,7 +21,7 @@ youtuberUploadRouter.post('/upload/:videoId', userAuth, async (req, res) => {
             return res.status(400).json({ msg: 'Video not approved' });
         }
 
-        await uploadVideo(req.cookies.token, video.filePath, video.title, video.description);
+        await uploadVideo(youtuberId, video.filePath, video.title, video.description);
         await sendEmail(youtuberEmail);
 
         res.json({ msg: 'Video uploaded successfully' });
@@ -28,4 +31,4 @@ youtuberUploadRouter.post('/upload/:videoId', userAuth, async (req, res) => {
     }
 });
 
-module.exports = youtuberUploadRouter;
+module.exports = editorUploadToYoutubeRouter;

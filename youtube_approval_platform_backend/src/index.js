@@ -6,21 +6,21 @@ require('express-async-errors');
 const feedbackRouter = require('./Routes/feedback');
 
 //importing editor routes
-//hello 
 const editorSignUpRouter = require('./Routes/Editor/signup');
 const editorLoginRouter = require('./Routes/Editor/login');
 const editorDeleteRouter = require('./Routes/Editor/delete');
 const editorVideosListRouter = require('./Routes/Editor/list-videos');
 const editorUploadRouter = require('./Routes/Editor/upload');
 const editorUpdateRouter = require('./Routes/Editor/update');
+const editorUploadToYoutubeRouter = require('./Routes/Editor/upload-to-youtube');
 
 //importing youtuber routes
 const youtuberSignUpRouter = require('./Routes/Youtuber/signup');
 const youtuberLoginRouter = require('./Routes/Youtuber/login');
 const youtuberApproveRouter = require('./Routes/Youtuber/approve');
 const youtuberRejectRouter = require('./Routes/Youtuber/reject');
-const youtuberUploadRouter = require('./Routes/Youtuber/upload');
 const youtuberPendingVideosRouter = require('./Routes/Youtuber/pending-videos');
+const youtuberApprovedVideosRouter = require('./Routes/Youtuber/approved-videos');
 
 const profileRouter = require('./Routes/profile');
 const logoutRouter = require('./Routes/logout');
@@ -41,6 +41,7 @@ app.use("/editor",editorLoginRouter);
 app.use("/editor",editorDeleteRouter);
 app.use("/editor",editorVideosListRouter);
 app.use("/editor",editorUploadRouter);
+app.use("/editor",editorUploadToYoutubeRouter);
 app.use("/editor",editorUpdateRouter);
 
 //using youtuber routes
@@ -48,8 +49,8 @@ app.use("/youtuber",youtuberSignUpRouter);
 app.use("/youtuber",youtuberLoginRouter);
 app.use("/youtuber",youtuberApproveRouter);
 app.use("/youtuber",youtuberRejectRouter);
-app.use("/youtuber",youtuberUploadRouter);
 app.use("/youtuber",youtuberPendingVideosRouter);
+app.use("/youtuber",youtuberApprovedVideosRouter);
 
 app.use(profileRouter);
 app.use(logoutRouter);
