@@ -15,8 +15,11 @@ const VideoSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ['pending', 'approved', 'rejected'],
+        enum: ['pending', 'approved', 'rejected', 'uploaded'],
         default: 'pending'
+    },
+    videoYoutubeId: {
+        type: String
     },
     uploadedBy: {
         type: Schema.Types.ObjectId,

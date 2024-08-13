@@ -12,7 +12,7 @@ editorUpdateRouter.put('/updateVideo/:videoId', userAuth, async (req, res) => {
         return res.status(404).json({ msg: 'Video not found' });
     }
 
-    if (video.uploadedBy.toString() !== req.user._id) {
+    if (video.uploadedBy.toString() !== req.user.id) {
         return res.status(403).json({ msg: 'Not authorized' });
     }
 

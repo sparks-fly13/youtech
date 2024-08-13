@@ -2,7 +2,6 @@ import { Box, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DeleteVideo from "./delete";
-import YoutubeUploadForm from "./uploadToYoutube";
 import ReactPlayer from "react-player";
 
 function VideoList() {
@@ -39,18 +38,18 @@ function VideoList() {
       justifyContent="center"
       m="15px"
     >
-    <ReactPlayer style={{cursor: "pointer"}} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="60%" />
-        <Box position="absolute" right="0" top="0">
-            {hoveredVideo === video._id && <DeleteVideo videoId={video._id} />}
+      <ReactPlayer style={{ cursor: "pointer" }} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="60%" />
+      <Box position="absolute" right="0" top="0">
+        {hoveredVideo === video._id && <DeleteVideo videoId={video._id} />}
+      </Box>
+      <Box display="flex" flexDirection="column">
+        <Text fontWeight="bold" fontSize="10px">{video.title}</Text>
+        <Text fontWeight="thin" fontSize="2xs">{video.description}</Text>
+        <Box display="flex">
+          <Text fontWeight="thin" fontSize="2xs">Status: {video.status}</Text>
+          <Text fontWeight="thin" fontSize="2xs">For: {video.associatedYoutuber}</Text>
         </Box>
-        <Box>
-            <Text fontWeight="bold" fontSize="10px">{video.title}</Text>
-            <Text fontWeight="thin" fontSize="2xs">{video.description}</Text>
-            <Box display="flex">
-                <Text fontWeight="thin" fontSize="2xs">Status: {video.status}</Text>
-                <Text fontWeight="thin" fontSize="2xs">For: {video.associatedYoutuber}</Text>
-            </Box>
-        </Box>
+      </Box>
     </Box>
   ));
 

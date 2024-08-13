@@ -29,7 +29,7 @@ editorDeleteRouter.delete('/deleteVideo/:videoId', userAuth, async (req, res) =>
       Bucket: process.env.S3_BUCKET_NAME,
       Key: key
     };
-    
+
     await s3.deleteObject(params).promise();
 
     // Delete the video object from the database

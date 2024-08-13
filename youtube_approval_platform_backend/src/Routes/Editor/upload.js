@@ -45,6 +45,11 @@ editorUploadRouter.post('/upload', userAuth, upload.single('video'), async (req,
   const associatedYoutuberId = await Youtuber.findOne({ name: req.body.associatedYoutuber }).select('_id');
 
   if (!associatedYoutuberId) {
+    //delete the video from s3 bucket
+    await s3.deleteObject({
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: req.file.key, // The key used to store the file in S3
+    }).promise();
     return res.status(400).json({ msg: 'No youtuber with that name exists.' });
   }
 
@@ -58,7 +63,7 @@ editorUploadRouter.post('/upload', userAuth, upload.single('video'), async (req,
   const video = new Video({
     title: req.body.title,
     description: req.body.description,
-    filePath:`https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.file.key}`, // Use file location from S3
+    filePath: `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${req.file.key}`, // Use file location from S3
     uploadedBy: req.user.id,
     associatedYoutuber: associatedYoutuberId._id,
     dateUploaded: Date.now(),

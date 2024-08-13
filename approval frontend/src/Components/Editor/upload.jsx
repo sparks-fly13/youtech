@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // VideoUploadModal.js
 import { useState } from 'react';
 import { Input, Textarea, Button, FormControl, FormLabel, VStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useToast } from '@chakra-ui/react';
@@ -36,7 +37,7 @@ const VideoUploadModal = ({ isOpen, onClose }) => {
       });
 
       console.log(response.data);
-       // Display success message or handle errors
+      // Display success message or handle errors
       toast({
         title: response.data.msg,
         status: 'success',

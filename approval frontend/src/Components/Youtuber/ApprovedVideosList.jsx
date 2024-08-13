@@ -1,10 +1,37 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useToast } from "@chakra-ui/react";
 
 function ApprovedVideosList() {
     const [approvedVideos, setApprovedVideos] = useState([]);
+    const toast = useToast();
+
+    const handleYoutubeUploadClick = async (videoId) => {
+        try {
+            await axios.post(`/upload/${videoId}`);
+            // Assuming the upload was successful, redirect to the profile page
+            toast({
+                title: "Video uploaded to YouTube successfully",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+            window.location.href = '/profile';
+        } catch (err) {
+            console.error('Upload error:', err);
+            // If there's an error, it might be because of a failed upload or some server issue
+            toast({
+                title: "Failed to upload video to YouTube",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    };
+
+
+
 
     useEffect(() => {
         const getApprovedVideos = async () => {
@@ -20,13 +47,17 @@ function ApprovedVideosList() {
 
     const renderedApprovedVideos = approvedVideos.map((video) => (
         <Box key={video._id} width="30%" justifyContent="center" m="15px">
-            <ReactPlayer style={{cursor: "pointer"}} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="60%" />
+            <ReactPlayer style={{ cursor: "pointer" }} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="60%" />
             <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                 <Text fontWeight="bold" fontSize="10px">{video.title}</Text>
                 <Text fontWeight="thin" fontSize="2xs">{video.description}</Text>
                 <Box display="flex">
                     <Text fontWeight="bold" fontSize="2xs">Status: {video.status}</Text>
                     <Text fontWeight="thin" fontSize="2xs">Uploaded by: {video.uploadedBy}</Text>
+                </Box>
+                {/*upload to youtube button*/}
+                <Box as="button" style={{ backgroundColor: 'violet', marginTop: '3px' }} onClick={() => handleYoutubeUploadClick(video._id)}>
+                    <Text fontWeight="bold" fontSize="2xs">Upload to YouTube</Text>
                 </Box>
             </Box>
         </Box>

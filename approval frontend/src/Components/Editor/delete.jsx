@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { CloseIcon } from '@chakra-ui/icons';
 import { IconButton, useToast } from '@chakra-ui/react';
 import axios from 'axios';
@@ -37,7 +38,7 @@ function DeleteVideo({ videoId }) {
 
   return (
     <IconButton icon={<CloseIcon />} onClick={handleDelete} colorScheme="red" variant="outline" size="xs"
-        onMouseEnter={handleDeleteWarning} onMouseLeave={handleRemoveDeleteWarning}
+      onMouseEnter={handleDeleteWarning} onMouseLeave={handleRemoveDeleteWarning}
     />
   );
 }

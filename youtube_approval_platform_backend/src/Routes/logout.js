@@ -4,10 +4,9 @@ const logoutRouter = express.Router();
 
 logoutRouter.get('/logout', (req, res) => {
     res.clearCookie('token', {
-        sameSite: 'none',
-        secure: true
+        sameSite: 'lax'
     });
-    res.status(200).json({message: 'Logged out successfully!'});
+    res.status(200).json({ message: 'Logged out successfully!' });
 });
 
 module.exports = logoutRouter;

@@ -23,22 +23,22 @@ function EditorDashboard() {
             await axios.get('/logout');
             history.replace('/');
             window.location.reload();
-    } catch(err) {
-        console.log(err.response);
+        } catch (err) {
+            console.log(err.response);
+        }
     }
-}
-    return(
+    return (
         <Box>
             <Box>
                 <Navbar />
-                {!!user ? 
+                {user ?
                     <Flex direction="column" align="center" justify="center">
                         <Text>Welcome editor {user.name}!</Text>
                         <Text>Your email is {user.email}</Text>
                         <Button onClick={handleLogOut}>Log Out</Button>
                         <Feedback />
                     </Flex>
-                : null
+                    : null
                 }
             </Box>
             {/* Upload Video Button */}
@@ -47,7 +47,7 @@ function EditorDashboard() {
                 <VideoUploadModal isOpen={isUploadModalOpen} onClose={handleUploadModalClose} />
             </Box>
             {/* List of Videos */}
-                <VideoList />
+            <VideoList />
         </Box>
     );
 }
