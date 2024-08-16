@@ -1,7 +1,7 @@
 import re
 from flask import Flask, request, jsonify
-import os
-import cv2
+# import os
+# import cv2
 
 app = Flask(__name__)
 
