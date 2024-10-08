@@ -5,6 +5,9 @@ require('express-async-errors');
 // const googleAuthRouter = require('./Routes/googleAuth');
 const feedbackRouter = require('./Routes/feedback');
 
+//controller imports
+const listVideos = require('./controllers/listVideos');
+
 //importing editor routes
 const editorSignUpRouter = require('./Routes/Editor/signup');
 const editorLoginRouter = require('./Routes/Editor/login');
@@ -35,6 +38,9 @@ app.use(express.static('public'));
 
 // app.use(googleAuthRouter);
 app.use(feedbackRouter);
+
+//using controllers
+app.use("/api/admin", listVideos);
 
 //using editor routes
 app.use("/editor", editorSignUpRouter);

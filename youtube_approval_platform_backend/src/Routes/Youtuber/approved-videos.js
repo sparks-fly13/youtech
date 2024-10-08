@@ -6,7 +6,10 @@ const youtuberApprovedVideosRouter = express.Router();
 
 youtuberApprovedVideosRouter.get('/approved-videos', userAuth, async (req, res) => {
     try {
-        const videos = await Video.find({ associatedYoutuber: req.user.id, status: 'approved' });
+        const videos = await Video.find({
+            associatedYoutuber: req.user.id,
+            status: { $in: ['approved', 'uploaded'] }
+        });
         res.json(videos);
     } catch (error) {
         console.error(error);

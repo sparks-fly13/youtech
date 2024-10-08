@@ -11,13 +11,7 @@ function ApprovedVideosList() {
         try {
             await axios.post(`/upload/${videoId}`);
             // Assuming the upload was successful, redirect to the profile page
-            toast({
-                title: "Video uploaded to YouTube successfully",
-                status: "success",
-                duration: 3000,
-                isClosable: true,
-            });
-            window.location.href = '/profile';
+            window.location.href = '/youtuber/dashboard';
         } catch (err) {
             console.error('Upload error:', err);
             // If there's an error, it might be because of a failed upload or some server issue
@@ -56,9 +50,11 @@ function ApprovedVideosList() {
                     <Text fontWeight="thin" fontSize="2xs">Uploaded by: {video.uploadedBy}</Text>
                 </Box>
                 {/*upload to youtube button*/}
-                <Box as="button" style={{ backgroundColor: 'violet', marginTop: '3px' }} onClick={() => handleYoutubeUploadClick(video._id)}>
-                    <Text fontWeight="bold" fontSize="2xs">Upload to YouTube</Text>
-                </Box>
+                {video.status === 'approved' && (
+                    <Box as="button" style={{ backgroundColor: 'violet', marginTop: '3px' }} onClick={() => handleYoutubeUploadClick(video._id)}>
+                        <Text fontWeight="bold" fontSize="2xs">Upload to YouTube</Text>
+                    </Box>
+                )}
             </Box>
         </Box>
     ));

@@ -17,24 +17,33 @@ function PendingVideosList() {
             }
         }
         getPendingVideos();
-    }, []);
+    }, [pendingVideos]);
 
     const handleMouseEnter = (videoId) => {
         setHoveredVideo(videoId);
     };
-    
+
     const handleMouseLeave = () => {
         setHoveredVideo(null);
     };
 
     const handleApproveVideo = async (videoId) => {
         try {
-            await axios.post(`/youtuber/approve/${videoId}`);
-            setPendingVideos(pendingVideos.filter((video) => video._id !== videoId));
+            const response = await axios.post(`/youtuber/approve/${videoId}`);
+            const { msg, authUrl } = response.data;
+
+            if (msg === 'Authorization required') {
+                // If authorization is required, redirect the user to the OAuth consent screen
+                window.location.href = authUrl;
+            } else {
+                // If approval is successful, remove the approved video from the pending list
+                setPendingVideos(pendingVideos.filter((video) => video._id !== videoId));
+            }
         } catch (err) {
-            console.error(err);
+            console.error('Error approving video:', err);
         }
     }
+
 
     const handleRejectVideo = async (videoId) => {
         try {
@@ -47,7 +56,7 @@ function PendingVideosList() {
 
     const renderedPendingVideos = pendingVideos.map((video) => (
         <Box key={video._id} width="30%" justifyContent="center" m="15px" onMouseEnter={() => handleMouseEnter(video._id)} onMouseLeave={handleMouseLeave}>
-            <ReactPlayer style={{cursor: "pointer"}} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="60%" />
+            <ReactPlayer style={{ cursor: "pointer" }} url={video.filePath} controls={true} pip={true} stopOnUnmount={false} width="90%" height="60%" />
             <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                 <Text fontWeight="bold" fontSize="10px">{video.title}</Text>
                 <Text fontWeight="thin" fontSize="2xs">{video.description}</Text>
@@ -58,7 +67,7 @@ function PendingVideosList() {
             </Box>
             {hoveredVideo === video._id && (
                 <Box display="flex" justifyContent="center" alignItems="center">
-                    <Button bg="green" color="white" p="5px" m="5px" onClick={() => handleApproveVideo(video._id)}>Approve</Button>
+                    <Button bg="green" color="white" p="5px" m="5px" onClick={() => handleApproveVideo(video._id)}>Authenticate and Approve</Button>
                     <Button bg="red" color="white" p="5px" m="5px" onClick={() => handleRejectVideo(video._id)}>Reject</Button>
                 </Box>
             )}

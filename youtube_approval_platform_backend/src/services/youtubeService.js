@@ -1,6 +1,6 @@
 const { google } = require('googleapis');
 const aws = require('aws-sdk');
-const fs = require('fs');
+// const fs = require('fs');
 const Youtuber = require('../models/Youtuber');
 const OAuth2 = google.auth.OAuth2;
 
